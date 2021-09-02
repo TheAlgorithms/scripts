@@ -26,7 +26,7 @@ if len(sys.argv) == 4:
 if len(sys.argv) == 5:
     skip = sys.argv[4].split(",")
 
-URL_BASE = "https://github.com/TheAlgorithms/" + sys.argv[0] + "/blob/master"
+URL_BASE = f"https://github.com/TheAlgorithms/{sys.argv[0]}/blob/master"
 
 
 def good_file_paths(top_dir: str = ".") -> Iterator[str]:
