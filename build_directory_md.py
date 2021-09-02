@@ -8,7 +8,7 @@ if ".py" in sys.argv[0]:
     sys.argv.pop(0)
 
 
-if len(sys.argv) in (3, 4, 5):
+if len(sys.argv) not in (3, 4, 5):
     print(
         "Arguments:\n"
         "[0] - Language\n"
