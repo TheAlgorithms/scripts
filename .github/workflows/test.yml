@@ -1,0 +1,11 @@
+name: Test
+on: workflow_dispatch
+jobs:
+  formatter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./formatter
+        with:
+          filetypes: .cpp,.hpp
+          working-directory: ./test

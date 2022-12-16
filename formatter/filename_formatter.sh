@@ -48,7 +48,6 @@ do
     if [ "${fname}" != "${new_fname}" ]
     then
         echo "      ${fname} --> ${new_fname}"
-        git "mv" "${fname}" "${new_fname}" # Requires you to be in version control
     fi
 done
 unset IFS; set +f
