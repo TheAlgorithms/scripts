@@ -1,4 +1,4 @@
-name: "Formatter"
+name: "Filename Formatter"
 description: "Format filenames into the format acceptable by TheAlgorithms opganization"
 author: "TheAlgorithms"
 inputs:
