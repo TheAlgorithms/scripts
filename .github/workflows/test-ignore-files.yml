@@ -9,4 +9,5 @@ jobs:
       - uses: ./formatter
         with:
           filetypes: .cpp,.hpp
-          working-directory: ./test
+          working-directory: .
+          ignore-files: ./test
