@@ -1,4 +1,4 @@
-name: Test With ignore directory argument
+name: Test with ignore directory argument
 on: workflow_dispatch
 jobs:
   formatter:
