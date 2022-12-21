@@ -1,0 +1,21 @@
+name: "Filename Formatter"
+description: "Format filenames into the format acceptable by TheAlgorithms opganization"
+author: "TheAlgorithms"
+inputs:
+  filetypes:
+    description: Filter files by specified file types (comma separated values in a string.) Maximum two values. E.g. `.cpp,.hpp`
+    required: true
+  working-directory:
+    description: Working/base directory of the formatter
+    required: false
+    default: .
+  ignore-files:
+    description: Files/folders to ignored
+    required: false
+runs:
+  using: composite
+  steps:
+    - name: Running the formatter
+      shell: bash
+      run: |
+        ./filename_formatter.sh ${{ inputs.working-directory }} ${{ inputs.filetypes }} ${{ inputs.ignore-files }}
