@@ -1,0 +1,17 @@
+name: DIRECTORY.md workflow (ignore directories)
+on:
+  push:
+    branches:
+      - 'main'
+jobs:
+  directory_builder:
+    runs-on: ubuntu-latest
+    name: Verify the DIRECTORY.md workflow works
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./directory_md
+        with:
+          language: C++
+          working-directory: .
+          filetypes: .cpp,.hpp
+          ignored-directories: ./test

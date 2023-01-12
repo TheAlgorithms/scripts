@@ -1,0 +1,29 @@
+name: "Build directory file"
+description: "Builds a DIRECTORY.md file with all the algorithms in one repository."
+author: "TheAlgorithms"
+inputs:
+  language:
+    description: The language used in your repository
+    required: true
+  working-directory:
+    description: Working/base directory of the script
+    required: true
+    default: .
+  filetypes:
+    description: Allowed filenames to check in (comma separated values in a string). Can have unlimited filetypes. E.g. `.cpp,.hpp,.h`
+    required: true
+  ignored-directories:
+    description: Files or folders to ignore, separated by commas.
+    required: false
+  ignore-folders-children:
+    description: Folders to ignore, but include children.
+    required: false
+runs:
+  using: composite
+  steps:
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    - name: Running the formatter
+      shell: bash
+      run: |
+        python3 ./build_directory_md.py ${{ inputs.language }} ${{ inputs.working-directory }} ${{ inputs.filetypes }} ${{ inputs.ignored-directories }} ${{ inputs.ignore-folders-children }} > DIRECTORY.md
