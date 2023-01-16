@@ -23,7 +23,7 @@ str_value2="$2"
 fi
 
 IFS=$'\n'; set -f
-for fname in $(find $1 -type f -name "*$str_value2" -or -name "*$str_value")
+for fname in `find $1 -type f -name "$str_value2" -o -name "$str_value"`
 do
     ignored_files="$(echo "$3" | tr "," "\n")"
 

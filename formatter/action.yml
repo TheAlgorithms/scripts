@@ -20,4 +20,4 @@ runs:
     - name: Running the formatter
       shell: bash
       run: |
-        filename_formatter.sh ${{ inputs.working-directory }} ${{ inputs.filetypes }} ${{ inputs.ignore-files }}
+        ../filename_formatter.sh ${{ inputs.working-directory }} ${{ inputs.filetypes }} ${{ inputs.ignore-files }}
