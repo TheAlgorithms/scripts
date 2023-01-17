@@ -7,23 +7,29 @@ echo -e "Arguments:
 [3] - Ignored files or folders (optional; use "\""./<directory_name>"\"")
 "
 
-echo "Changed files:"
-
-
 # Separate $2 value (filename types) if it has a comma
 if [[ "$2" == *","* ]];
 then
-string="$2"
+    string="$2"
 
-str_value=${string#*,}
-str_value2=${string%%,*}
+    str_value=${string#*,}
+    str_value2=${string%%,*}
 else
-str_value="$2"
-str_value2="$2"
+    str_value="$2"
+    str_value2="$2"
 fi
 
+# Do not run script if there are no given arguments.
+if [[ "$1" == "" ]] || [[ "$2" == "" ]];
+then
+    echo "No arguments given. Please specify minimum two arguments."
+    exit 1
+fi
+
+echo "Changed files:"
+
 IFS=$'\n'; set -f
-for fname in `find $1 -type f -name "$str_value2" -o -name "$str_value"`
+for fname in $(find $1 -type f -name "*$str_value2" -or -name "*$str_value")
 do
     ignored_files="$(echo "$3" | tr "," "\n")"
 
