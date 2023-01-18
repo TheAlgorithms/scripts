@@ -27,7 +27,17 @@ runs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.10' # or whatever version you support
+    - name: Setup Git configurations
+      shell: bash
+      run: |
+        git config --global user.name github-actions[bot]
+        git config --global user.email 'github-actions@users.noreply.github.com'
     - name: Running the formatter
       shell: bash
       run: |
-        python ../build_directory_md.py ${{ inputs.language }} ${{ inputs.working-directory }} ${{ inputs.filetypes }} ${{ inputs.ignored-directories }} ${{ inputs.ignore-folders-children }} > DIRECTORY.md
+        python ./build_directory_md.py ${{ inputs.language }} ${{ inputs.working-directory }} ${{ inputs.filetypes }} ${{ inputs.ignored-directories }} ${{ inputs.ignore-folders-children }} > DIRECTORY.md
+    - name: Committing changes
+      shell: bash
+      run: |
+        git commit -m "chore: update `DIRECTORY.md`" DIRECTORY.md || true
+        git push origin HEAD:$GITHUB_REF || true
