@@ -29,5 +29,7 @@ runs:
     - name: Committing changes
       shell: bash
       run: |
-        git commit -m "chore: formatting filenames" DIRECTORY.md || true
+        git add ${{ inputs.working-directory }} || true
+        git commit -m "chore: formatting filenames" || true
+
         git push origin HEAD:$GITHUB_REF || true
