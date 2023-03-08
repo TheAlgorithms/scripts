@@ -17,19 +17,24 @@ runs:
   steps:
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
-    - name: Setup Git configurations
-      shell: bash
-      run: |
-        git config --global user.name github-actions[bot]
-        git config --global user.email 'github-actions@users.noreply.github.com'
     - name: Running the formatter
       shell: bash
       run: |
         filename_formatter.sh ${{ inputs.working-directory }} ${{ inputs.filetypes }} ${{ inputs.ignore-files }}
-    - name: Committing changes
-      shell: bash
-      run: |
-        git add ${{ inputs.working-directory }} || true
-        git commit -m "chore: formatting filenames" || true
 
-        git push origin HEAD:$GITHUB_REF || true
+        git pull || true
+    - name: Committing and pushing changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      id: commit-push
+      with:
+        commit_message: "chore: formatting filenames"
+        branch: "formatting_files-${{ github.sha }}"
+        create_branch: true
+    - name: Creating and merging the PR
+      shell: bash
+      if: steps.commit-push.outputs.changes_detected == 'true'
+      run: |
+        gh pr create --base ${GITHUB_REF##*/} --head formatting_files-${{ github.sha }} --title 'chore: formatting filenames' --body 'Formatted filenames (see the diff. for changes).'
+        gh pr merge --admin --merge --subject 'chore: formatting filenames' --delete-branch
+      env:
+        GH_TOKEN: ${{ github.token }}
