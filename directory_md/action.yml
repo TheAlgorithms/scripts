@@ -26,7 +26,7 @@ runs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10' # or whatever version you support
+        python-version: '3.x'  # or whatever version you support
     - name: Running the formatter
       shell: bash
       run: |
