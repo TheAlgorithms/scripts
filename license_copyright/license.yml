@@ -31,4 +31,3 @@ runs:
         gh pr create --base master --head license-update-${{ github.sha }} --title 'docs: updating `License` copyright' --body 'Updated License copyright (see the diff. for changes).'
       env:
         GH_TOKEN: ${{ github.token }}
-
