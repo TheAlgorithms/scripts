@@ -26,7 +26,7 @@ runs:
         git push
     - name: Creating and merging the PR
       shell: bash
-      if: steps.commit-push.outputs.changes_detected == 'true'
+      if [[ `git status --porcelain` ]]; then
       run: |
         gh pr create --base master --head license-update-${{ github.sha }} --title 'docs: updating `License` copyright' --body 'Updated License copyright (see the diff. for changes).'
       env:
