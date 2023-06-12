@@ -26,18 +26,27 @@ runs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10' # or whatever version you support
+        python-version: '3.x'
     - name: Setup Git configurations
       shell: bash
       run: |
         git config --global user.name github-actions[bot]
         git config --global user.email 'github-actions@users.noreply.github.com'
-    - name: Running the formatter
+    - name: Running the directory builder
       shell: bash
       run: |
         python build_directory_md.py ${{ inputs.language }} ${{ inputs.working-directory }} ${{ inputs.filetypes }} ${{ inputs.ignored-directories }} ${{ inputs.ignore-folders-children }} > DIRECTORY.md
     - name: Committing changes
       shell: bash
       run: |
-        git commit -m "chore: update `DIRECTORY.md`" DIRECTORY.md || true
-        git push origin HEAD:$GITHUB_REF || true
+        git branch directory-update
+        git checkout directory-update
+
+        git commit -m "docs: update `DIRECTORY.md`" DIRECTORY.md || true
+        git push origin directory-update:directory-update
+    - name: Creating a pull request
+      shell: bash
+      run: |
+          if [[ `git status --porcelain` ]]; then
+          gh pr create --base ${GITHUB_REF##*/} --head directory-update --title 'docs: updating `DIRECTORY.md`' --body 'Updated the `DIRECTORY.md` file (see the diff. for changes).' || true
+      # `true` is needed in case the PR has been already created to prevent the CI to fail. The changes will already be pushed to the current PR's branch.
