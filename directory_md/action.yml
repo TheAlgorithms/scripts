@@ -43,7 +43,7 @@ runs:
         git checkout directory-update
 
         git commit -m "docs: update `DIRECTORY.md`" DIRECTORY.md || true
-        git push origin directory-update:directory-update
+        git push origin directory-update:directory-update --force
     - name: Creating a pull request
       shell: bash
       run: |
