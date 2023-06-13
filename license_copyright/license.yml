@@ -26,7 +26,7 @@ runs:
       shell: bash
       run: |
         git checkout -b license-update-${{ github.sha }}
-        git commit -m "docs: updating Copyright license year"
+        git commit -m "docs: updating copyright license year"
         git push
     - name: Creating and merging the PR
       shell: bash
