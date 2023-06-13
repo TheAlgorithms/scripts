@@ -6,6 +6,10 @@ inputs:
     description: License file name
     required: true
     default: LICENSE
+initial_year:
+    description: Year of the repository's creation
+    required: true
+    default: 2016
 runs:
   using: composite
   steps:
