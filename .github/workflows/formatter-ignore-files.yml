@@ -1,8 +1,5 @@
 name: Test with ignore directory argument
-on:
-  push:
-    branches:
-      - 'main'
+on: [workflow_dispatch]
 jobs:
   formatter:
     runs-on: ubuntu-latest

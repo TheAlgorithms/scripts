@@ -1,8 +1,5 @@
 name: DIRECTORY.md workflow (ignore directories)
-on:
-  push:
-    branches:
-      - 'main'
+on: [workflow_dispatch]
 jobs:
   directory_builder:
     runs-on: ubuntu-latest
