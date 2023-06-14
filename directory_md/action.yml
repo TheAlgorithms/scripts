@@ -18,6 +18,10 @@ inputs:
   ignore-folders-children:
     description: Folders to ignore, but include children.
     required: false
+  branch-name:
+    description: The branch that will be used to push changes.
+    required: false
+    default: directory-update
 runs:
   using: composite
   steps:
@@ -35,18 +39,29 @@ runs:
     - name: Running the directory builder
       shell: bash
       run: |
-        python build_directory_md.py ${{ inputs.language }} ${{ inputs.working-directory }} ${{ inputs.filetypes }} ${{ inputs.ignored-directories }} ${{ inputs.ignore-folders-children }} > DIRECTORY.md
-    - name: Committing changes
-      shell: bash
-      run: |
-        git branch directory-update
-        git checkout directory-update
+        # If branch exists, change to that branch to prevent multiple committing/PR creation.
+        git checkout ${{ inputs.branch-name }} || true
 
-        git commit -m "docs: update `DIRECTORY.md`" DIRECTORY.md || true
-        git push origin directory-update:directory-update --force
-    - name: Creating a pull request
+        python build_directory_md.py ${{ inputs.language }} ${{ inputs.working-directory }} ${{ inputs.filetypes }} ${{ inputs.ignored-directories }} ${{ inputs.ignore-folders-children }} > DIRECTORY.md
+    - name: Creating a branch
       shell: bash
       run: |
-          if [[ `git status --porcelain` ]]; then
-          gh pr create --base ${GITHUB_REF##*/} --head directory-update --title 'docs: updating `DIRECTORY.md`' --body 'Updated the `DIRECTORY.md` file (see the diff. for changes).' || true
-      # `true` is needed in case the PR has been already created to prevent the CI to fail. The changes will already be pushed to the current PR's branch.
+        git branch ${{ inputs.branch-name }} || true
+        git checkout ${{ inputs.branch-name }} || true
+
+    - name: Committing, pushing, and creating a PR
+      shell: bash
+      run: |
+        if [[ `git status --porcelain` ]];
+        then
+
+          git add DIRECTORY.md
+
+          git commit -m "docs: update DIRECTORY.md" || true
+          git push origin ${{ inputs.branch-name }}:${{ inputs.branch-name }} --force
+
+          gh pr create --base ${GITHUB_REF##*/} --head ${{ inputs.branch-name }} --title 'docs: updating `DIRECTORY.md`' --body 'Updated the `DIRECTORY.md` file (see the diff. for changes).' || true
+          # Using `true` will make sure no errors are displayed even if there's a PR created.
+        fi
+      env:
+        GH_TOKEN: ${{ github.token }}
