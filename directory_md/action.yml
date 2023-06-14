@@ -58,7 +58,7 @@ runs:
           git add DIRECTORY.md
 
           git commit -m "docs: update DIRECTORY.md" || true
-          git push origin ${{ inputs.branch-name }}:${{ inputs.branch-name }} --force
+          git push origin ${{ inputs.branch-name }}:${{ inputs.branch-name }} --force-with-lease
 
           gh pr create --base ${GITHUB_REF##*/} --head ${{ inputs.branch-name }} --title 'docs: updating `DIRECTORY.md`' --body 'Updated the `DIRECTORY.md` file (see the diff. for changes).' || true
           # Using `true` will make sure no errors are displayed even if there's a PR created.
