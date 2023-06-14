@@ -14,3 +14,4 @@ jobs:
           language: scripts
           working-directory: ./test
           filetypes: .cpp,.hpp
+          branch-name: directory-update
