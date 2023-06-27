@@ -32,7 +32,7 @@ runs:
       shell: bash
       run: |
         if [[ $(git log --branches --not --remotes) ]]; then
-          gh pr create --base master --head license-update-${{ github.sha }} --title 'docs: updating `License` copyright' --body 'Updated License copyright (see the diff. for changes).' || true
+          gh pr create --base ${GITHUB_REF##*/} --head license-update-${{ github.sha }} --title 'docs: updating `License` copyright' --body 'Updated License copyright (see the diff. for changes).' || true
         fi
       env:
         GH_TOKEN: ${{ github.token }}
