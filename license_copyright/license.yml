@@ -1,13 +1,13 @@
 name: 'Update copyright license'
-description: Update license years automatically
+description: Updates copyright license year automatically
 author: "TheAlgorithms"
 inputs:
   filename:
-    description: License file name
+    description: "License filename"
     required: true
     default: LICENSE
 initial_year:
-    description: Year of the repository's creation
+    description: "Year of the repository's creation"
     required: true
     default: 2016
 runs:
@@ -27,11 +27,12 @@ runs:
       run: |
         git checkout -b license-update-${{ github.sha }}
         git commit -m "docs: updating copyright license year"
-        git push
+        git push origin license-update-${{ github.sha }}:license-update-${{ github.sha }}
     - name: Creating and merging the PR
       shell: bash
       run: |
-        if [[ `git status --porcelain` ]]; then
-        gh pr create --base master --head license-update-${{ github.sha }} --title 'docs: updating `License` copyright' --body 'Updated License copyright (see the diff. for changes).'
+        if [[ $(git log --branches --not --remotes) ]]; then
+          gh pr create --base ${GITHUB_REF##*/} --head license-update-${{ github.sha }} --title 'docs: updating `License` copyright' --body 'Updated License copyright (see the diff. for changes).'
+        fi
       env:
         GH_TOKEN: ${{ github.token }}
