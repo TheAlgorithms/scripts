@@ -28,7 +28,7 @@ runs:
         git checkout -b license-update-${{ github.sha }}
         git commit -m "docs: updating copyright license year"
         git push origin license-update-${{ github.sha }}:license-update-${{ github.sha }}
-    - name: Creating and merging the PR
+    - name: Creating a PR
       shell: bash
       run: |
         if [[ $(git log --branches --not --remotes) ]]; then
