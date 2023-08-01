@@ -42,7 +42,7 @@ runs:
         # If branch exists, change to that branch to prevent multiple committing/PR creation.
         git checkout ${{ inputs.branch-name }} || true
 
-        python build_directory_md.py ${{ inputs.language }} ${{ inputs.working-directory }} ${{ inputs.filetypes }} ${{ inputs.ignored-directories }} ${{ inputs.ignore-folders-children }} > DIRECTORY.md
+        python ${{ github.action_path }}/build_directory_md.py ${{ inputs.language }} ${{ inputs.working-directory }} ${{ inputs.filetypes }} ${{ inputs.ignored-directories }} ${{ inputs.ignore-folders-children }} > DIRECTORY.md
     - name: Creating a branch
       shell: bash
       run: |
