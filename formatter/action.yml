@@ -25,7 +25,7 @@ runs:
     - name: Running the formatter
       shell: bash
       run: |
-        filename_formatter.sh ${{ inputs.working-directory }} ${{ inputs.filetypes }} ${{ inputs.ignore-files }}
+        ${{ github.action_path }}/filename_formatter.sh ${{ inputs.working-directory }} ${{ inputs.filetypes }} ${{ inputs.ignore-files }}
     - name: Committing changes
       shell: bash
       run: |
