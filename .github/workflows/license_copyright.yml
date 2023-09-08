@@ -1,0 +1,11 @@
+name: License Copyright test
+on: [workflow_dispatch]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./license-copyright
+        with:
+          filename: LICENSE
+          initial_year: 2021
