@@ -1,16 +1,16 @@
 name: "Filename Formatter"
-description: "Format filenames into the acceptable format by TheAlgorithms opganization"
+description: "Format filenames into the acceptable format by TheAlgorithms organization"
 author: "TheAlgorithms"
 inputs:
   filetypes:
-    description: Filter files by specified file types (comma separated values in a string.) Maximum two values. E.g. `.cpp,.hpp`
+    description: Filter files by specified file types (comma-separated values in a string.) Maximum two values. E.g. `.cpp,.hpp`
     required: true
   working-directory:
     description: Working/base directory of the formatter
     required: false
     default: .
   ignore-files:
-    description: Files/folders to ignored
+    description: Files/folders to be ignored
     required: false
 runs:
   using: composite
